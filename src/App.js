@@ -32,14 +32,14 @@ function App() {
         }
       }
 
-      while(minutes<60) {
+      while(minutes<61) {
         setMinutes(minutes => minutes + 1);
         if(minutes == 60) {
           setMinutes(0);
         }
       }  
 
-      while(hours<24) {
+      while(hours<25) {
         setHours(hours => hours + 1);
         if(hours == 24) {
           setHours(0);
