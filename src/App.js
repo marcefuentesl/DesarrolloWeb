@@ -25,7 +25,7 @@ function App() {
   useEffect (() => {
     let interval = null;
     interval = setInterval(() => {
-      while(seconds<60) {
+      while(seconds<61) {
         setSeconds(seconds => seconds + 1);
         if(seconds == 60) {
           setSeconds(0);
