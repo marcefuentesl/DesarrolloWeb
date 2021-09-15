@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import React, { useState, useEffect, useInputState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
@@ -15,6 +16,31 @@ import MyButton from "./components/MyButton";
 function App() {
   const [nombres, setNombres] = useState([]);
 
+  const [state, setState] = useState("");
+
+  const [stateModel, setStateModel] = useState({
+    name: "",
+    lastName: "",
+    age: 0,
+  });
+
+  function setData(e) {
+    switch (e.target.id) {
+      case "1":
+        stateModel.name = e.target.value;
+        break;
+
+      case "2":
+        stateModel.lastName = e.target.value;
+        break;
+
+      case "3":
+        stateModel.age = e.target.value;
+        break;
+    }
+    console.log(stateModel);
+  }
+
   // const [modalShow, setModalShow] = useState(false);
   // const [btnActivo, setBtnActivo] = useState("Cargando");
   // const [show, setShow] = useState(false);
@@ -31,7 +57,10 @@ function App() {
   // };
 
   useEffect(() => {
-    axios.get("https://jsonplaceholder.typicode.com/users").then((res) => {});
+    axios.get("https://jsonplaceholder.typicode.com/users").then((res) => {
+      console.log(res);
+      setNombres(res.data);
+    });
   }, []);
 
   return (
@@ -89,13 +118,17 @@ function App() {
         <Route path={"/usuarios"}>
           <Container style={{ padding: 30 }}>
             <u>
-              <Usuarios />{" "}
+              <Usuarios nombre={...nombres} data={nombres} />{" "}
             </u>
           </Container>
         </Route>
         <Route path={"/Formulario"}>
           <Container style={{ padding: 20 }}>
-            <input  placeholder={"Nombre"} />
+            <div onChange={(e) => setData(e)}>
+              <input id="1" placeholder={"Nombre"} />
+              <input id="2" placeholder={"Apellido"} />
+              <input id="3" placeholder={"Edad"} />
+            </div>
           </Container>
         </Route>
       </Switch>
