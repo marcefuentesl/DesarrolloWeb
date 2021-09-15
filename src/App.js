@@ -1,75 +1,105 @@
-//librerias ó components
-import "./App.css";
-import "./index.css";
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import React, { useState, useEffect, useInputState } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Container, Navbar, Nav, Col, NavDropdown, Row } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
+
+import Usuarios from "./routers/UsuariosRouters";
+import Formulario from "./routers/FormularioRouters";
+import Loading from "./components/Loading";
+
+import MyVerticallyCenteredModal from "./components/MyVerticallyCenteredModal";
+import MyOffSet from "./components/MyOffSet";
+import MyButton from "./components/MyButton";
 
 function App() {
-  
-  const [users, setUsers] = useState([{ id: 0, name: "Ruben" }]);
+  const [nombres, setNombres] = useState([]);
 
-  const onClick = () => {
-    setUsers([...users, {id: users.length, name: "Marce"}])
-  };  
+  // const [modalShow, setModalShow] = useState(false);
+  // const [btnActivo, setBtnActivo] = useState("Cargando");
+  // const [show, setShow] = useState(false);
+  // const handleShow = () => setShow(true);
 
-  var dataComponent = {
-    type: "button",
-    value: "Update",
-    hidden: false
-  }
+  // const handleSelect = () => {
+  //   setModalShow(true);
+  // };
 
-  //const[date, setDate] = useState(new Date());
-  const[seconds, setSeconds] = useState(0);
-  const[minutes, setMinutes] = useState(0);
-  const[hours, setHours] = useState(0);
+  // const handleSelectFromButton = (props) => {
+  //   console.log(props.target.id);
+  //   setBtnActivo(props.target.id);
+  //   setModalShow(true);
+  // };
 
-  useEffect (() => {
-    let interval = null;
-    interval = setInterval(() => {
-      while(seconds<60) {
-        setSeconds(seconds => seconds + 1);
-        if(seconds == 60) {
-          setSeconds(0);
-        }
-      }
-
-      while(minutes<61) {
-        setMinutes(minutes => minutes + 1);
-        if(minutes == 60) {
-          setMinutes(0);
-        }
-      }  
-
-      while(hours<25) {
-        setHours(hours => hours + 1);
-        if(hours == 24) {
-          setHours(0);
-        }
-      }
-    }, 1000);
-
-    return() => clearInterval(interval);
-    //var timerID = setInterval(() => tick(), 1000)
-    //return function cleanUp(params) {
-    //  clearInterval(timerID)
-    //}
-  });
-
-  //function tick() {
-  //  setDate(new Date())
-  //}
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/users").then((res) => {});
+  }, []);
 
   return (
-    <div>
-      <h1>{hours}:{minutes}:{seconds}</h1>
-      <input onClick={onClick} {...dataComponent} />
-      <div>
-        {users.map((e) => (
-          <div>
-            {e.id} - {e.name}
-          </div>
-        ))}
-      </div>
-    </div>
+    <Router>
+      <Navbar
+        style={{ paddingLeft: 20, paddingRight: 20 }}
+        sticky="top"
+        collapseOnSelect
+        bg="dark"
+        variant="dark"
+        expand="md"
+      >
+        <LinkContainer to="/Usuarios">
+          <Navbar.Brand href="/">
+            {" "}
+            <img
+              alt=""
+              src="https://react-bootstrap.github.io/logo.svg"
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{" "}
+            SAI
+          </Navbar.Brand>
+        </LinkContainer>
+
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/usuarios">
+              <Nav.Link>Usuarios</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/formulario">
+              <Nav.Link>Formulario</Nav.Link>
+            </LinkContainer>
+            {/* <LinkContainer to="/Formulario">
+              <Nav.Link>{btnActivo}</Nav.Link>
+            </LinkContainer> */}
+            <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+              {/* <NavDropdown.Item onClick={() => handleShow()}>
+                Canva
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => handleSelect()}>
+                Modal
+              </NavDropdown.Item> */}
+            </NavDropdown>
+          </Nav>
+
+          {/* <MyButton /> */}
+        </Navbar.Collapse>
+      </Navbar>
+
+      <Switch>
+        <Route path={"/usuarios"}>
+          <Container style={{ padding: 30 }}>
+            <u>
+              <Usuarios />{" "}
+            </u>
+          </Container>
+        </Route>
+        <Route path={"/Formulario"}>
+          <Container style={{ padding: 20 }}>
+            <input  placeholder={"Nombre"} />
+          </Container>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
