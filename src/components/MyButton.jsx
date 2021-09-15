@@ -1,18 +1,18 @@
-import { Image } from "react-bootstrap";
+import { Badge } from "react-bootstrap";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 
 export default function MyButton(params) {
   return (
-<section>
+    <section>
       <ShoppingCartOutlinedIcon
         value="miValor"
         id="Carrito"
-        onClick={(a) => params._handleSelectFromButton(a)}
+        onClick={(e) => params._handleSelectFromButton(e)}
         style={{ color: "white" }}
         fontSize="large"
       />
       <Badge pill bg="danger">
-        {params.todos.length}
+        {params.nombres.length}
       </Badge>
     </section>
   );
